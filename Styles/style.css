@@ -180,3 +180,68 @@ footer {
 .hidden-submenu .submenu ul a:hover {
   text-decoration: underline;
 }
+-----------------------------------------------------BLOG ARTICLE STYLING
+.blog-article {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  color: #333;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.blog-header h1 {
+  color: #ff6392;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.blog-intro {
+  margin-bottom: 2rem;
+}
+
+.toc {
+  border: 2px solid #ffd5e5;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2.5rem;
+  background: #fff;
+}
+
+.toc h2 {
+  color: #ff6392;
+  margin-bottom: 0.5rem;
+}
+
+.toc ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.toc a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+.blog-article h2 {
+  color: #ff6392;
+  font-size: 1.7rem;
+  margin-top: 2.5rem;
+}
+
+.blog-article h3 {
+  color: #ff6392;
+  font-size: 1.3rem;
+  margin-top: 1.5rem;
+}
+
+.blog-article ul {
+  margin: 0.5rem 0 1.5rem 1.2rem;
+}
+
+.blog-article section {
+  margin-bottom: 2rem;
+}
