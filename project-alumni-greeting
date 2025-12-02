@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Newsletter Creation & Management: Alumni Greetings</title>
+  <link rel="stylesheet" href="Styles/style.css" />
+</head>
+<body>
+
+<header>
+  <h1>E-Newsletter Creation & Management: Alumni Greetings</h1>
+  <p class="subtitle">Writing & Communication Content | Project Management</p>
+</header>
+
+<main class="project-post">
+  <h2>Overview</h2>
+  <p>Write a short intro about the project, the client, and the goals.</p>
+
+  <h2>My Role</h2>
+  <ul>
+    <li>Content creation</li>
+    <li>Ad design + copywriting</li>
+    <li>Analytics + reporting</li>
+  </ul>
+
+  <h2>Process</h2>
+  <p>Explain your strategy, steps, tools used, etc.</p>
+
+  <h2>Results</h2>
+  <p>Add metrics, screenshots, or highlights.</p>
+
+  <a class="back-link" href="projects.html">← Back to Projects</a>
+</main>
+
+</body>
+</html>
