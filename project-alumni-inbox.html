@@ -284,16 +284,22 @@
         // Initialize the interface on page load
         document.addEventListener('DOMContentLoaded', renderEmailList);
         
-        // Ensure responsive classes update on resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                inboxContainerEl.classList.remove('mobile-content', 'mobile-list');
-            } else {
-                 // Re-apply mobile classes if resizing down to mobile
-                 if (selectedEmailId !== null) {
-                    inboxContainerEl.classList.add('mobile-content');
-                    inboxContainerEl.classList.remove('mobile-list');
-                 } else {
-                    inboxContainerEl.classList.add('mobile-list');
-                    inboxContainerEl.classList.remove('mobile-content');
-                 }
+       // Ensure responsive classes update on resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                inboxContainerEl.classList.remove('mobile-content', 'mobile-list');
+            } else {
+                 // Re-apply mobile classes if resizing down to mobile
+                 if (selectedEmailId !== null) {
+                    inboxContainerEl.classList.add('mobile-content');
+                    inboxContainerEl.classList.remove('mobile-list');
+                 } else {
+                    inboxContainerEl.classList.add('mobile-list');
+                    inboxContainerEl.classList.remove('mobile-content');
+                 }
+            }
+        });
+    </script>
+
+</body>
+</html>
