@@ -1,290 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumni Newsletter Inbox Showcase - Outlook Style</title>
-    <link rel="stylesheet" href="Styles/style.css">
-    <style>
-    :root {
-        --outlook-blue: #0078D4;
-        --light-gray: #f3f3f3;
-        --mid-gray: #e0e0e0;
-        --dark-gray: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Newsletter Inbox Showcase - Outlook Style</title>
+    <style>
+        /* ------------------------------------------- */
+        /* Outlook Styling and Layout - Desktop */
+        /* ------------------------------------------- */
+        :root {
+            --outlook-blue: #0078D4; /* Primary Color [cite: 266] */
+            --light-gray: #f3f3f3;
+            --mid-gray: #e0e0e0;
+            --dark-gray: #333;
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: var(--light-gray);
-        overflow-y: scroll;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Preferred Fonts [cite: 267] */
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            height: 100vh;
+            overflow: hidden; /* Hide main scrollbar, content panes are scrollable */
+        }
 
-    /* 🔥 BOXED LAYOUT CONTAINER - APPLIED TO THE WHOLE INTERFACE 🔥 */
-    .container {
-        max-width: 1200px;
-        width: 90%;
-        margin: 20px auto; /* Centered, with margin above/below */
-        background-color: #ffffff;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        border-radius: 8px;
-        padding: 0;
-        overflow: hidden;
-    }
-    
-    /* Hide the placeholder content that was moved */
-    .container h1, .container p:first-of-type {
-        display: none;
-    }
-
-
-    /* ------------------------------------------- */
-    /* OUTLOOK APP STRUCTURE (Three Panes) */
-    /* ------------------------------------------- */
-    .inbox-container {
-        display: flex;
-        height: 75vh; /* Fixed height for the app view */
-        border-top: 4px solid var(--outlook-blue);
-    }
-
-    /* Left Sidebar (Folders) */
-    .sidebar-folders {
-        width: 200px;
-        background-color: #fff;
-        padding: 10px 0;
-        border-right: 1px solid var(--mid-gray);
-        flex-shrink: 0;
-        overflow-y: auto; /* Internal scrolling */
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .sidebar-folders h3 {
-        font-size: 14px;
-        font-weight: 600;
-        padding: 0 15px 10px;
-        margin: 0;
-        color: var(--dark-gray);
-    }
-
-    .folder-item {
-        padding: 8px 15px;
-        cursor: default;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-    }
-    
-    .folder-item.active {
-        background-color: var(--mid-gray);
-        font-weight: 600;
-    }
-
-    /* Middle Pane (Email List/Previews) */
-    .middle-pane {
-        width: 350px;
-        background-color: #fff;
-        border-right: 1px solid var(--mid-gray);
-        flex-shrink: 0;
-        overflow-y: auto; /* Scrollable list */
-    }
-
-    .middle-pane h2 {
-        font-size: 16px;
-        font-weight: 600;
-        padding: 15px;
-        margin: 0;
-        border-bottom: 1px solid var(--mid-gray);
-        background-color: var(--light-gray);
-    }
-    
-    /* Right Pane (Full Email Content) */
-    .content-pane {
-        flex-grow: 1;
-        background-color: #fff;
-        overflow-y: auto; /* Scrollable content */
-    }
-
-    .content-header {
-        padding: 15px 20px;
-        border-bottom: 1px solid var(--mid-gray);
-        background-color: var(--light-gray);
-    }
-
-    /* Styles for email previews and content elements (omitted for brevity, assume they are correct) */
-
-    /* ------------------------------------------- */
-    /* Responsive Design (Mobile View) */
-    /* ------------------------------------------- */
-    @media (max-width: 768px) {
         .inbox-container {
+            display: flex;
+            height: 100%;
+            border-top: 4px solid var(--outlook-blue);
+        }
+
+        /* ------------------------------------------- */
+        /* Left Sidebar (Folders) [cite: 89] */
+        /* ------------------------------------------- */
+        .sidebar-folders {
+            width: 200px;
+            background-color: #fff;
+            padding: 10px 0;
+            border-right: 1px solid var(--mid-gray);
+            flex-shrink: 0;
+            color: var(--dark-gray);
+            display: flex;
             flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .sidebar-folders h3 {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0 15px 10px;
+            margin: 0;
+            color: var(--dark-gray);
+        }
+
+        .folder-item {
+            padding: 8px 15px;
+            cursor: default;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .folder-item.active {
+            background-color: var(--mid-gray);
+            font-weight: 600;
+        }
+
+        .folder-item:hover {
+            background-color: var(--mid-gray);
+        }
+
+        /* ------------------------------------------- */
+        /* Middle Pane (Email List/Previews) [cite: 90] */
+        /* ------------------------------------------- */
+        .middle-pane {
+            width: 350px;
+            background-color: #fff;
+            border-right: 1px solid var(--mid-gray);
+            flex-shrink: 0;
+            overflow-y: auto; /* Scrollable list [cite: 270] */
+        }
+
+        .middle-pane h2 {
+            font-size: 16px;
+            font-weight: 600;
+            padding: 15px;
+            margin: 0;
+            border-bottom: 1px solid var(--mid-gray);
+            background-color: var(--light-gray);
+        }
+
+        .email-preview {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--mid-gray);
+            cursor: pointer;
+            height: 70px; /* Email Preview Height [cite: 269] */
+            box-sizing: border-box;
+        }
+
+        .email-preview:hover {
+            background-color: var(--light-gray);
+        }
+
+        .email-preview.selected {
+            background-color: var(--outlook-blue);
+            color: #fff;
+        }
+
+        .email-preview.selected .preview-from,
+        .email-preview.selected .preview-date,
+        .email-preview.selected .preview-text {
+            color: #fff;
+        }
+
+        .preview-from {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: var(--dark-gray);
+        }
+
+        .preview-subject {
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .preview-text {
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 3px;
+        }
+
+        /* ------------------------------------------- */
+        /* Right Pane (Full Email Content) [cite: 91] */
+        /* ------------------------------------------- */
+        .content-pane {
+            flex-grow: 1;
+            background-color: #fff;
+            overflow-y: auto; /* Scrollable content [cite: 270] */
+        }
+
+        .content-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--mid-gray);
+            background-color: var(--light-gray);
+        }
+
+        .content-header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 5px;
+            color: var(--dark-gray);
+        }
+
+        .content-header p {
+            font-size: 12px;
+            margin: 0;
+            color: #666;
+        }
+
+        .content-body {
+            padding: 0; /* Newsletter HTML will handle its own padding */
+        }
+        
+        /* Ensure embedded newsletter images scale correctly */
+        .content-body img {
+            max-width: 100%; 
             height: auto;
         }
-        .container {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
-            border-radius: 0;
-            box-shadow: none;
+        
+        /* Fix for Raiser's Edge/Email Builder HTML (often uses fixed widths) */
+        .content-body > table {
+            width: 100% !important;
+            max-width: 800px; /* Optional: Adjust max width for large screens */
+            box-sizing: border-box;
         }
-        /* Mobile-specific pane visibility logic (omitted for brevity, assume it is correct) */
-    }
-</</style>
-</</head>
-<b<body>
-  <header>
-    <nav class="navbar">
-      <a href="index.html" class="active">Home</a>
-      <a href="about.html">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
-    
-        <div class="container">
-                
-        <div class="inbox-container mobile-list">
-        
-            <div class="sidebar-folders">
-                <h3>Folders</h3>
-                <div class="folder-item active">Inbox (3)</div>
-                <div class="folder-item">Drafts</div>
-                <div class="folder-item">Sent Items</div>
-                <div class="folder-item">Junk Email</div>
-            </div>
 
-            <div class="middle-pane">
-                <h2>Inbox (3)</h2>
-                <div id="email-list">
-                </div>
-            </div>
 
-            <div class="content-pane">
-                <button class="mobile-back-button" onclick="showEmailList()">← Back to Inbox</button>
-                <div id="content-header" class="content-header">
-                </div>
-                <div id="content-body" class="content-body">
-                    <div style="padding: 20px;">
-                        <h2>Welcome to the Alumni Newsletter Showcase</h2>
-                        <p>Select an email from the list on the left to view the full newsletter content here. This simulator demonstrates my ability to manage and display email marketing content in a portfolio setting.</p>
-                    </div>
-                </div>
-            </div>
+        /* ------------------------------------------- */
+        /* Responsive Design (Mobile View) [cite: 92, 250, 268] */
+        /* ------------------------------------------- */
+        @media (max-width: 768px) {
+            .inbox-container {
+                flex-direction: column; /* Stacks panes vertically */
+            }
 
-        </div>
-    </div>
+            .sidebar-folders {
+                display: none; /* Hide folders on mobile for simplicity */
+            }
 
-         <!-- Site footer (styled by your stylesheet) -->
-  <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">
-      <p>© <span id="year"></span> Angela Mergen</p>
+            .middle-pane {
+                width: 100%;
+                height: 50vh; /* Takes up half the screen vertically */
+                border-right: none;
+                border-bottom: 1px solid var(--mid-gray);
+            }
+
+            .content-pane {
+                width: 100%;
+                height: 50vh; /* Takes up the other half of the screen vertically */
+            }
+
+            /* For initial view, show only the email list */
+            .inbox-container.mobile-list .content-pane {
+                display: none;
+            }
+
+            /* When an email is selected, show only the content pane */
+            .inbox-container.mobile-content .middle-pane {
+                display: none;
+            }
+
+            .inbox-container.mobile-content .content-pane {
+                display: block;
+                height: 100vh; /* Take full height when viewing email */
+            }
+            
+            .mobile-back-button {
+                display: block !important;
+                background-color: var(--outlook-blue);
+                color: white;
+                padding: 10px;
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                width: 100%;
+            }
+        }
+        
+        .mobile-back-button {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="inbox-container mobile-list">
+        
+        <div class="sidebar-folders">
+            <h3>Folders</h3>
+            <div class="folder-item active">Inbox (3)</div>
+            <div class="folder-item">Drafts</div>
+            <div class="folder-item">Sent Items</div>
+            <div class="folder-item">Junk Email</div>
+        </div>
+
+        <div class="middle-pane">
+            <h2>Inbox (3)</h2>
+            <div id="email-list">
+                </div>
+        </div>
+
+        <div class="content-pane">
+            <button class="mobile-back-button" onclick="showEmailList()">← Back to Inbox</button>
+            <div id="content-header" class="content-header">
+                </div>
+            <div id="content-body" class="content-body">
+                <div style="padding: 20px;">
+                    <h2>Welcome to the Alumni Newsletter Showcase</h2>
+                    <p>Select an email from the list on the left to view the full newsletter content here. This simulator demonstrates my ability to manage and display email marketing content in a portfolio setting.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </footer>
-        <script>
-        // Newsletter Data Array
-        const newsletters = [
-            {
-                id: 1,
-                from: "TBC&GS Alumni Relations <alumni@trinitybiblecollege.edu>",
-                subject: "September 2025: Campus Updates",
-                date: "September 18, 2025",
-                preview: "Campus Updates…(we couldn't wait to share with you!)",
-                // Placeholder content for Phase 3 insertion
-                content: `<div style="padding: 20px;"><h2>Newsletter 1 Placeholder: September 2025</h2><p>This is where the extracted HTML content for the September newsletter will be placed in Phase 3.</p></div>`
-            },
-            {
-                id: 2,
-                from: "TBC&GS Alumni Relations <alumni@trinitybiblecollege.edu>",
-                subject: "August 2025 Alumni Greetings: Paige Koch",
-                date: "August 1, 2025",
-                preview: "August: Paige Koch: Power of Discipleship. Greetings, In this edition, we feature alumna Paige Koch. Paige graduated from Trinity in 2015...",
-                // Placeholder content for Phase 3 insertion
-                content: `<div style="padding: 20px;"><h2>Newsletter 2 Placeholder: August 2025</h2><p>This is where the extracted HTML content for the August newsletter will be placed in Phase 3.</p></div>`
-            },
-            {
-                id: 3,
-                from: "TBC&GS Alumni Relations <alumni@trinitybiblecollege.edu>",
-                subject: "July 2025 Alumni Greetings: Phyllis and Dan Kuno",
-                date: "June 12, 2025",
-                preview: "June Alumni Greetings: Phyllis and Dan Kuno. Greetings, This spring alumna Phyllis (Seibold) Kuno retired from her service as Librarian...",
-                // Placeholder content for Phase 3 insertion
-                content: `<div style="padding: 20px;"><h2>Newsletter 3 Placeholder: July 2025</h2><p>This is where the extracted HTML content for the July newsletter will be placed in Phase 3.</p></div>`
-            }
-        ];
 
-        const emailListEl = document.getElementById('email-list');
-        const contentHeaderEl = document.getElementById('content-header');
-        const contentBodyEl = document.getElementById('content-body');
-        const inboxContainerEl = document.querySelector('.inbox-container');
-        
-        let selectedEmailId = null;
+    <script>
+        // Newsletter Data Array [cite: 254]
+        const newsletters = [
+            {
+                id: 1,
+                from: "TBC&GS Alumni Relations <alumni@trinitybiblecollege.edu>",
+                subject: "September 2025: Campus Updates",
+                date: "September 18, 2025",
+                preview: "Campus Updates…(we couldn't wait to share with you!)",
+                // Placeholder content for Phase 3 insertion
+                content: `<div style="padding: 20px;"><h2>Newsletter 1 Placeholder: September 2025</h2><p>This is where the extracted HTML content for the September newsletter will be placed in Phase 3.</p></div>`
+            },
+            {
+                id: 2,
+                from: "TBC&GS Alumni Relations <alumni@trinitybiblecollege.edu>",
+                subject: "August 2025 Alumni Greetings: Paige Koch",
+                date: "August 1, 2025",
+                preview: "August: Paige Koch: Power of Discipleship. Greetings, In this edition, we feature alumna Paige Koch. Paige graduated from Trinity in 2015...",
+                // Placeholder content for Phase 3 insertion
+                content: `<div style="padding: 20px;"><h2>Newsletter 2 Placeholder: August 2025</h2><p>This is where the extracted HTML content for the August newsletter will be placed in Phase 3.</p></div>`
+            },
+            {
+                id: 3,
+                from: "TBC&GS Alumni Relations <alumni@trinitybiblecollege.edu>",
+                subject: "July 2025 Alumni Greetings: Phyllis and Dan Kuno",
+                date: "June 12, 2025",
+                preview: "June Alumni Greetings: Phyllis and Dan Kuno. Greetings, This spring alumna Phyllis (Seibold) Kuno retired from her service as Librarian...",
+                // Placeholder content for Phase 3 insertion
+                content: `<div style="padding: 20px;"><h2>Newsletter 3 Placeholder: July 2025</h2><p>This is where the extracted HTML content for the July newsletter will be placed in Phase 3.</p></div>`
+            }
+        ];
 
-        // Function to render the list of email previews
-        function renderEmailList() {
-            emailListEl.innerHTML = '';
-            // Display newsletters in chronological order (newest first)
-            newsletters.forEach(email => {
-                const isSelected = email.id === selectedEmailId;
-                const emailEl = document.createElement('div');
-                emailEl.className = `email-preview ${isSelected ? 'selected' : ''}`;
-                emailEl.setAttribute('data-id', email.id);
-                emailEl.onclick = () => selectEmail(email.id);
-                
-                emailEl.innerHTML = `
-                    <div class="preview-from">${email.from.split('<')[0].trim()}</div>
-                    <div class="preview-subject">${email.subject}</div>
-                    <div class="preview-text">${email.preview} - <span class="preview-date">${email.date}</span></div>
-                `;
-                emailListEl.appendChild(emailEl);
-            });
-            // Automatically select the newest email on load if none selected
-            if (selectedEmailId === null && newsletters.length > 0) {
-                 selectEmail(newsletters[0].id);
-            }
-        }
+        const emailListEl = document.getElementById('email-list');
+        const contentHeaderEl = document.getElementById('content-header');
+        const contentBodyEl = document.getElementById('content-body');
+        const inboxContainerEl = document.querySelector('.inbox-container');
+        
+        let selectedEmailId = null;
 
-        // Function to display the full content of a selected email
-        function selectEmail(id) {
-            selectedEmailId = id;
-            const email = newsletters.find(n => n.id === id);
+        // Function to render the list of email previews
+        function renderEmailList() {
+            emailListEl.innerHTML = '';
+            // Display newsletters in chronological order (newest first)
+            newsletters.forEach(email => {
+                const isSelected = email.id === selectedEmailId;
+                const emailEl = document.createElement('div');
+                emailEl.className = `email-preview ${isSelected ? 'selected' : ''}`;
+                emailEl.setAttribute('data-id', email.id);
+                emailEl.onclick = () => selectEmail(email.id);
+                
+                emailEl.innerHTML = `
+                    <div class="preview-from">${email.from.split('<')[0].trim()}</div>
+                    <div class="preview-subject">${email.subject}</div>
+                    <div class="preview-text">${email.preview} - <span class="preview-date">${email.date}</span></div>
+                `;
+                emailListEl.appendChild(emailEl);
+            });
+            // Automatically select the newest email on load if none selected
+            if (selectedEmailId === null && newsletters.length > 0) {
+                 selectEmail(newsletters[0].id);
+            }
+        }
 
-            // Update Header
-            contentHeaderEl.innerHTML = `
-                <h1>${email.subject}</h1>
-                <p><strong>From:</strong> ${email.from} | <strong>Date:</strong> ${email.date}</p>
-            `;
+        // Function to display the full content of a selected email
+        function selectEmail(id) {
+            selectedEmailId = id;
+            const email = newsletters.find(n => n.id === id);
 
-            // Update Body (Inserting the newsletter HTML)
-            contentBodyEl.innerHTML = email.content;
-            
-            // Highlight the selected preview in the list
-            document.querySelectorAll('.email-preview').forEach(el => {
-                el.classList.remove('selected');
-                if (parseInt(el.getAttribute('data-id')) === id) {
-                    el.classList.add('selected');
-                }
-            });
+            // Update Header
+            contentHeaderEl.innerHTML = `
+                <h1>${email.subject}</h1>
+                <p><strong>From:</strong> ${email.from} | <strong>Date:</strong> ${email.date}</p>
+            `;
 
-            // Handle mobile view: switch from list view to content view
-            if (window.innerWidth <= 768) {
-                inboxContainerEl.classList.remove('mobile-list');
-                inboxContainerEl.classList.add('mobile-content');
-            }
-        }
-        
-        // Function to switch back to the email list on mobile
-        function showEmailList() {
-            inboxContainerEl.classList.remove('mobile-content');
-            inboxContainerEl.classList.add('mobile-list');
-        }
+            // Update Body (Inserting the newsletter HTML)
+            contentBodyEl.innerHTML = email.content;
+            
+            // Highlight the selected preview in the list
+            document.querySelectorAll('.email-preview').forEach(el => {
+                el.classList.remove('selected');
+                if (parseInt(el.getAttribute('data-id')) === id) {
+                    el.classList.add('selected');
+                }
+            });
 
-        // Initialize the interface on page load
-        document.addEventListener('DOMContentLoaded', renderEmailList);
-        
-       // Ensure responsive classes update on resize
+            // Handle mobile view: switch from list view to content view
+            if (window.innerWidth <= 768) {
+                inboxContainerEl.classList.remove('mobile-list');
+                inboxContainerEl.classList.add('mobile-content');
+            }
+        }
+        
+        // Function to switch back to the email list on mobile
+        function showEmailList() {
+            inboxContainerEl.classList.remove('mobile-content');
+            inboxContainerEl.classList.add('mobile-list');
+        }
+
+        // Initialize the interface on page load
+        document.addEventListener('DOMContentLoaded', renderEmailList);
+        
+        // Ensure responsive classes update on resize
         window.addEventListener('resize', () => {
             if (window.innerWidth > 768) {
                 inboxContainerEl.classList.remove('mobile-content', 'mobile-list');
