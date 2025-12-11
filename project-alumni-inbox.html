@@ -4,64 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni Newsletter Inbox Showcase - Outlook Style</title>
-    <link rel="stylesheet" href="Styles/style.css">
     <style>
         /* ------------------------------------------- */
         /* Outlook Styling and Layout - Desktop */
         /* ------------------------------------------- */
         :root {
-            --outlook-blue: #0078D4;
+            --outlook-blue: #0078D4; /* Primary Color [cite: 266] */
             --light-gray: #f3f3f3;
             --mid-gray: #e0e0e0;
             --dark-gray: #333;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Preferred Fonts [cite: 267] */
             margin: 0;
             padding: 0;
             background-color: var(--light-gray);
-            overflow-y: scroll;
+            height: 100vh;
+            overflow: hidden; /* Hide main scrollbar, content panes are scrollable */
         }
 
-        /* BOXED LAYOUT CONTAINER - APPLIED TO THE WHOLE INTERFACE */
-        .container {
-            max-width: 1200px;
-            width: 90%;
-            margin: 20px auto;
-            background-color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            padding: 0;
-            overflow: hidden;
-        }
-        
-        /* Hide the placeholder content that was moved */
-        .container h1, .container p:first-of-type {
-            display: none;
-        }
-
-
-        /* ------------------------------------------- */
-        /* OUTLOOK APP STRUCTURE (Three Panes) */
-        /* ------------------------------------------- */
         .inbox-container {
             display: flex;
-            height: 75vh; /* Fixed height for the app view */
+            height: 100%;
             border-top: 4px solid var(--outlook-blue);
         }
 
-        /* Left Sidebar (Folders) */
+        /* ------------------------------------------- */
+        /* Left Sidebar (Folders) [cite: 89] */
+        /* ------------------------------------------- */
         .sidebar-folders {
             width: 200px;
             background-color: #fff;
             padding: 10px 0;
             border-right: 1px solid var(--mid-gray);
             flex-shrink: 0;
-            overflow-y: auto; /* Internal scrolling */
-            box-sizing: border-box;
+            color: var(--dark-gray);
             display: flex;
             flex-direction: column;
+            box-sizing: border-box;
         }
 
         .sidebar-folders h3 {
@@ -79,19 +60,25 @@
             display: flex;
             align-items: center;
         }
-        
+
         .folder-item.active {
             background-color: var(--mid-gray);
             font-weight: 600;
         }
 
-        /* Middle Pane (Email List/Previews) */
+        .folder-item:hover {
+            background-color: var(--mid-gray);
+        }
+
+        /* ------------------------------------------- */
+        /* Middle Pane (Email List/Previews) [cite: 90] */
+        /* ------------------------------------------- */
         .middle-pane {
             width: 350px;
             background-color: #fff;
             border-right: 1px solid var(--mid-gray);
             flex-shrink: 0;
-            overflow-y: auto; /* Scrollable list */
+            overflow-y: auto; /* Scrollable list [cite: 270] */
         }
 
         .middle-pane h2 {
@@ -102,12 +89,61 @@
             border-bottom: 1px solid var(--mid-gray);
             background-color: var(--light-gray);
         }
-        
-        /* Right Pane (Full Email Content) */
+
+        .email-preview {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--mid-gray);
+            cursor: pointer;
+            height: 70px; /* Email Preview Height [cite: 269] */
+            box-sizing: border-box;
+        }
+
+        .email-preview:hover {
+            background-color: var(--light-gray);
+        }
+
+        .email-preview.selected {
+            background-color: var(--outlook-blue);
+            color: #fff;
+        }
+
+        .email-preview.selected .preview-from,
+        .email-preview.selected .preview-date,
+        .email-preview.selected .preview-text {
+            color: #fff;
+        }
+
+        .preview-from {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            color: var(--dark-gray);
+        }
+
+        .preview-subject {
+            font-size: 14px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .preview-text {
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 3px;
+        }
+
+        /* ------------------------------------------- */
+        /* Right Pane (Full Email Content) [cite: 91] */
+        /* ------------------------------------------- */
         .content-pane {
             flex-grow: 1;
             background-color: #fff;
-            overflow-y: auto; /* Scrollable content */
+            overflow-y: auto; /* Scrollable content [cite: 270] */
         }
 
         .content-header {
@@ -142,54 +178,48 @@
         /* Fix for Raiser's Edge/Email Builder HTML (often uses fixed widths) */
         .content-body > table {
             width: 100% !important;
-            max-width: 800px;
+            max-width: 800px; /* Optional: Adjust max width for large screens */
             box-sizing: border-box;
         }
 
 
         /* ------------------------------------------- */
-        /* Responsive Design (Mobile View) */
+        /* Responsive Design (Mobile View) [cite: 92, 250, 268] */
         /* ------------------------------------------- */
         @media (max-width: 768px) {
             .inbox-container {
-                flex-direction: column;
-                height: auto;
-            }
-            .container {
-                max-width: 100%;
-                width: 100%;
-                margin: 0;
-                border-radius: 0;
-                box-shadow: none;
+                flex-direction: column; /* Stacks panes vertically */
             }
 
             .sidebar-folders {
-                display: none;
+                display: none; /* Hide folders on mobile for simplicity */
             }
 
             .middle-pane {
                 width: 100%;
-                height: 100vh;
+                height: 50vh; /* Takes up half the screen vertically */
                 border-right: none;
                 border-bottom: 1px solid var(--mid-gray);
             }
 
             .content-pane {
                 width: 100%;
-                height: 100vh;
+                height: 50vh; /* Takes up the other half of the screen vertically */
             }
 
+            /* For initial view, show only the email list */
             .inbox-container.mobile-list .content-pane {
                 display: none;
             }
 
+            /* When an email is selected, show only the content pane */
             .inbox-container.mobile-content .middle-pane {
                 display: none;
             }
 
             .inbox-container.mobile-content .content-pane {
                 display: block;
-                height: 100vh;
+                height: 100vh; /* Take full height when viewing email */
             }
             
             .mobile-back-button {
@@ -210,51 +240,39 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <a href="index.html" class="active">Home</a>
-            <a href="about.html">About</a>
-            <a href="projects.html">Projects</a>
-            <a href="contact.html">Contact</a>
-            <a href="alumni-greeting-inbox.html">Alumni Inbox Demo</a>
-        </nav>
-    </header>
-    
-    <div class="container">
+
+    <div class="inbox-container mobile-list">
         
-        <div class="inbox-container mobile-list">
-            
-            <div class="sidebar-folders">
-                <h3>Folders</h3>
-                <div class="folder-item active">Inbox (3)</div>
-                <div class="folder-item">Drafts</div>
-                <div class="folder-item">Sent Items</div>
-                <div class="folder-item">Junk Email</div>
-            </div>
-
-            <div class="middle-pane">
-                <h2>Inbox (3)</h2>
-                <div id="email-list">
-                </div>
-            </div>
-
-            <div class="content-pane">
-                <button class="mobile-back-button" onclick="showEmailList()">← Back to Inbox</button>
-                <div id="content-header" class="content-header">
-                </div>
-                <div id="content-body" class="content-body">
-                    <div style="padding: 20px;">
-                        <h2>Welcome to the Alumni Newsletter Showcase</h2>
-                        <p>Select an email from the list on the left to view the full newsletter content here. This simulator demonstrates my ability to manage and display email marketing content in a portfolio setting.</p>
-                    </div>
-                </div>
-            </div>
-
+        <div class="sidebar-folders">
+            <h3>Folders</h3>
+            <div class="folder-item active">Inbox (3)</div>
+            <div class="folder-item">Drafts</div>
+            <div class="folder-item">Sent Items</div>
+            <div class="folder-item">Junk Email</div>
         </div>
+
+        <div class="middle-pane">
+            <h2>Inbox (3)</h2>
+            <div id="email-list">
+                </div>
+        </div>
+
+        <div class="content-pane">
+            <button class="mobile-back-button" onclick="showEmailList()">← Back to Inbox</button>
+            <div id="content-header" class="content-header">
+                </div>
+            <div id="content-body" class="content-body">
+                <div style="padding: 20px;">
+                    <h2>Welcome to the Alumni Newsletter Showcase</h2>
+                    <p>Select an email from the list on the left to view the full newsletter content here. This simulator demonstrates my ability to manage and display email marketing content in a portfolio setting.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
-    
+
     <script>
-        // Newsletter Data Array - Updated with final content
+        // Newsletter Data Array [cite: 254]
         const newsletters = [
             {
                 id: 1,
@@ -262,32 +280,8 @@
                 subject: "September 2025: Campus Updates",
                 date: "September 18, 2025",
                 preview: "Campus Updates…(we couldn't wait to share with you!)",
-                // Newsletter 3: Special Edition Updates Sept 2025.txt
-                content: `
-                    <div style="padding: 20px;">
-                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 20px;">
-                            <tbody><tr>
-                                <td style="padding: 20px;">
-                                    <p style="font-size: 16px; line-height: 1.5;">Greetings,</p>
-                                    <p style="font-size: 16px; line-height: 1.5;">We are thrilled to share some exciting campus updates that we've been working on this summer!</p>
-                                    <h3 style="color: #0078D4;">New Student Commons Completion</h3>
-                                    <p style="font-size: 16px; line-height: 1.5;">The new John W. Smith Student Commons is now fully operational! This state-of-the-art facility features a modern lounge, expanded cafeteria seating, and new study rooms. Alumni are welcome to stop by and take a tour during your next visit.</p>
-                                    <p style="text-align: center;"><img src="images/new-commons-photo.jpg" alt="Photo of the new Student Commons" style="max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0;"></p>
-                                    <h3 style="color: #0078D4;">Online Education Expansion</h3>
-                                    <p style="font-size: 16px; line-height: 1.5;">Starting this fall, we are launching three new fully online degree programs, expanding our reach and making a Trinity education more accessible than ever before. This initiative includes significant upgrades to our digital learning infrastructure.</p>
-                                    <h3 style="color: #0078D4;">Faculty Highlight</h3>
-                                    <p style="font-size: 16px; line-height: 1.5;">Dr. Lisa Chen has been appointed as the new Dean of Biblical Studies. Dr. Chen brings over 20 years of teaching experience and a deep commitment to spiritual formation. We look forward to her leadership!</p>
-                                    <p style="font-size: 16px; line-height: 1.5; text-align: center; margin-top: 30px;">
-                                        <a href="https://trinitybiblecollege.edu/give" style="background-color: #0078D4; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Support Campus Development</a>
-                                    </p>
-                                    <p style="font-size: 14px; line-height: 1.5; text-align: center; color: #666; margin-top: 20px;">
-                                        Thank you for your continued support of Trinity Bible College & Graduate School.
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody></table>
-                        </div>
-                `
+                // Placeholder content for Phase 3 insertion
+                content: `<div style="padding: 20px;"><h2>Newsletter 1 Placeholder: September 2025</h2><p>This is where the extracted HTML content for the September newsletter will be placed in Phase 3.</p></div>`
             },
             {
                 id: 2,
@@ -295,35 +289,8 @@
                 subject: "August 2025 Alumni Greetings: Paige Koch",
                 date: "August 1, 2025",
                 preview: "August: Paige Koch: Power of Discipleship. Greetings, In this edition, we feature alumna Paige Koch. Paige graduated from Trinity in 2015...",
-                // Newsletter 1: August 2025 Alumni Greetings.txt
-                content: `
-                    <div style="padding: 20px;">
-                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 20px;">
-                            <tbody><tr>
-                                <td style="padding: 20px;">
-                                    <p style="font-size: 16px; line-height: 1.5;">Greetings,</p>
-                                    <p style="font-size: 16px; line-height: 1.5;">In this edition, we feature alumna Paige Koch. Paige graduated from Trinity in 2015 with a Biblical Studies and Youth Ministry bachelor degree. Shortly after graduating she was hired at Sioux Falls LifeChange Church, and has been on staff for the last ten years in a variety of roles.</p>
-                                    
-                                    <p style="text-align: center;"><img src="images/paige-koch-alumna.jpg" alt="Photo of alumna Paige Koch" style="max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0;"></p>
-                                    
-                                    <h3 style="color: #0078D4;">The Power of Discipleship</h3>
-                                    <p style="font-size: 16px; line-height: 1.5;">"Trinity didn't just give me a degree; it gave me a foundation for life and ministry," says Paige. "The intentional discipleship I received from my professors and mentors prepared me not just for the theological aspects of youth ministry, but for the demanding, relational work it requires."</p>
-
-                                    <h3 style="color: #0078D4;">A Decade of Service</h3>
-                                    <p style="font-size: 16px; line-height: 1.5;">Paige currently serves as the Associate Pastor overseeing student ministries and outreach. Her department has seen substantial growth, attributed largely to her focus on empowering student leaders.</p>
-
-                                    <blockquote style="border-left: 4px solid #0078D4; padding-left: 15px; margin: 20px 0; font-style: italic; color: #555;">
-                                        "My favorite memory from TBC was the mission trip to Haiti. It wasn't just service; it was a profound learning experience that shaped how I view global ministry today."
-                                    </blockquote>
-                                    
-                                    <p style="font-size: 16px; line-height: 1.5; text-align: center; margin-top: 30px;">
-                                        <a href="https://trinitybiblecollege.edu/alumni-stories" style="background-color: #0078D4; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Read More Alumni Stories</a>
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody></table>
-                        </div>
-                `
+                // Placeholder content for Phase 3 insertion
+                content: `<div style="padding: 20px;"><h2>Newsletter 2 Placeholder: August 2025</h2><p>This is where the extracted HTML content for the August newsletter will be placed in Phase 3.</p></div>`
             },
             {
                 id: 3,
@@ -331,33 +298,8 @@
                 subject: "July 2025 Alumni Greetings: Phyllis and Dan Kuno",
                 date: "June 12, 2025",
                 preview: "June Alumni Greetings: Phyllis and Dan Kuno. Greetings, This spring alumna Phyllis (Seibold) Kuno retired from her service as Librarian...",
-                // Newsletter 2: June 2025 Alumni Greetings.txt
-                content: `
-                    <div style="padding: 20px;">
-                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="padding: 20px;">
-                            <tbody><tr>
-                                <td style="padding: 20px;">
-                                    <p style="font-size: 16px; line-height: 1.5;">Greetings,</p>
-                                    <p style="font-size: 16px; line-height: 1.5;">This spring alumna Phyllis (Seibold) Kuno retired from her service as Librarian at Trinity Bible College and Graduate School. Phyllis and her husband, Dan, both alumni, share a heart for young people and have been involved at Trinity for over 50 years of combined service. They married in September of 1975 and have two children and eight grandchildren.</p>
-                                    
-                                    <p style="font-size: 16px; line-height: 1.5;">Enjoy the Kuno’s stories of fond memories from their time at TBC and how God proved to be reliable throughout their lives.</p>
-                                    
-                                    <p style="text-align: center;"><img src="images/kuno-couple.jpg" alt="Photo of Phyllis and Dan Kuno" style="max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0;"></p>
-
-                                    <h3 style="color: #0078D4;">A Legacy of Service</h3>
-                                    <p style="font-size: 16px; line-height: 1.5;">Phyllis joined the TBC staff in 1999, dedicating over 25 years to fostering a love for reading and research among students. Dan served in facilities management for many years, helping maintain the campus grounds.</p>
-
-                                    <h3 style="color: #0078D4;">Fond Memories</h3>
-                                    <p style="font-size: 16px; line-height: 1.5;">"The annual Christmas banquets were always a highlight," recalls Phyllis. "It was a time when the whole college family came together. The campus truly felt like home."</p>
-
-                                    <p style="font-size: 16px; line-height: 1.5; text-align: center; margin-top: 30px;">
-                                        <a href="https://trinitybiblecollege.edu/retirement-celebration" style="background-color: #0078D4; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Watch Retirement Tribute</a>
-                                    </p>
-                                </td>
-                            </tr>
-                        </tbody></table>
-                        </div>
-                `
+                // Placeholder content for Phase 3 insertion
+                content: `<div style="padding: 20px;"><h2>Newsletter 3 Placeholder: July 2025</h2><p>This is where the extracted HTML content for the July newsletter will be placed in Phase 3.</p></div>`
             }
         ];
 
@@ -372,7 +314,6 @@
         function renderEmailList() {
             emailListEl.innerHTML = '';
             // Display newsletters in chronological order (newest first)
-            // Note: The array order is set so that Sept (ID 1) is first, Aug (ID 2) is second, and July (ID 3) is last.
             newsletters.forEach(email => {
                 const isSelected = email.id === selectedEmailId;
                 const emailEl = document.createElement('div');
@@ -389,7 +330,7 @@
             });
             // Automatically select the newest email on load if none selected
             if (selectedEmailId === null && newsletters.length > 0) {
-                selectEmail(newsletters[0].id);
+                 selectEmail(newsletters[0].id);
             }
         }
 
@@ -436,14 +377,14 @@
             if (window.innerWidth > 768) {
                 inboxContainerEl.classList.remove('mobile-content', 'mobile-list');
             } else {
-                // Re-apply mobile classes if resizing down to mobile
-                if (selectedEmailId !== null) {
+                 // Re-apply mobile classes if resizing down to mobile
+                 if (selectedEmailId !== null) {
                     inboxContainerEl.classList.add('mobile-content');
                     inboxContainerEl.classList.remove('mobile-list');
-                } else {
+                 } else {
                     inboxContainerEl.classList.add('mobile-list');
                     inboxContainerEl.classList.remove('mobile-content');
-                }
+                 }
             }
         });
     </script>
